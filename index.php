@@ -1,10 +1,13 @@
 <?php
 include 'Database.php';
 
-$users = Database::getInstatnce()->query("SELECT * FROM users WHERE username IN  (?, ?) ", ['Damir', 'Fara']);
+// $users = Database::getInstatnce()->query("SELECT * FROM users WHERE username IN  (?, ?) ", ['Damir', 'Fara']);
 
+$users = Database::getInstatnce()->get('users', ['username', '=',  'Fara']);
+// $users = Database::getInstatnce()->get('users', ['password', '=',  'password1']);
+  
 if ($users->error()) {
-    echo 'OOPS';
+    echo 'Error';
 } else {
     // echo 'OK'; 
     foreach ($users->results() as $user) {
@@ -12,6 +15,6 @@ if ($users->error()) {
     }
 }
 
-// var_dump($users->count());die;
-// die;
-
+//Delete
+// $users = Database::getInstatnce()->delete('users', ['password', '=',  'pswd1']);
+// $users = Database::getInstatnce()->delete('users', ['username', '=',  'q']);
