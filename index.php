@@ -30,8 +30,20 @@ require_once 'Database.php';
 
 
 //--------------> Update
-$id = 150;
-Database::getInstatnce()->update('users', $id, [
-    'username' => 'Kahoot1',  
-    'password' => 'asd1'
-]);  
+// $id = 150;
+// Database::getInstatnce()->update('users', $id, [
+//     'username' => 'Kahoot1',  
+//     'password' => 'asd1'
+// ]);  
+
+
+//Выборка пользователя
+$users = Database::getInstatnce()->get('users', ['username', '=',  'Fara']);
+// var_dump('<pre>');
+// var_dump($users->results()[0]);
+// var_dump('</pre>');
+
+echo $users->first()->username; //only one user
+// echo $users->first()->password; 
+
+// echo $users->results()[0]->username; // All users
