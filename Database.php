@@ -110,4 +110,23 @@ class Database
         }
         return false;
     }
+
+
+    public function update($table, $id, $fields = [])
+    {
+        $set = '';
+        foreach ($fields as $key => $field) {
+            $set .= "{$key} = ?, "; // username = ?, password = ?,
+        }
+        
+        $set = rtrim($set, ', '); // username = ?, password = ?
+        // echo $set;die;
+    
+        $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
+        //    var_dump($sql);die;
+        if (!$this->query($sql, $fields)->error()) {
+            return true;
+        }
+        return false;
+    }
 }
