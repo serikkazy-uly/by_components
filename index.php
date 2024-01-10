@@ -1,16 +1,15 @@
 <?php
 require_once 'Database.php';
 require_once 'Config.php';
+require_once 'Input.php';
+require_once 'Validate.php';
 
 $GLOBALS['config'] = [
     'mysql' => [
         'host' => 'mysql',
         'username' => 'user',
-
         'password' => 'secret',
-
         'database' => 'app',
-
         'something' => [
             'no' => [
                 'foo' => [
@@ -19,55 +18,64 @@ $GLOBALS['config'] = [
             ],
         ]
     ],
-    'config_my' =>[]
+    'config_my' => []
 ];
 
-echo Config::get('mysql.something.no.foo.bar');
-// $users = Database::getInstatnce()->query('users', ['select * from users']);
-// var_dump($users->results());
+// Validation (passed or error)
+if (Input::exists()) {
+    $validate = new Validate();
 
-// $users = Database::getInstatnce()->query("SELECT * FROM users WHERE username IN  (?, ?) ", ['Damir', 'Fara']);
+    $validate = $validate->check($_POST, [
+        'username' => [
+            'required' => true,
+            'min' => 2,
+            'max' => 15,
+            'unique' => 'users'
+        ],
 
-//--------------> Get
-// $users = Database::getInstatnce()->get('users', ['username', '=',  'Fara']);
-// $users = Database::getInstatnce()->get('users', ['password', '=',  'password1']);
-  
-// if ($users->error()) {
-//     echo 'Error';
-// } else {
-//     // echo 'OK'; 
-//     foreach ($users->results() as $user) {
-//         echo $user->username . '<br>';
-//     }
-// }
+        'password' => [
+            'required' => true,
+            'min' => 3,
 
-//-------------->Delete
-// $users = Database::getInstatnce()->delete('users', ['password', '=',  'pswd1']);
-// $users = Database::getInstatnce()->delete('users', ['username', '=',  'q']);
+        ],
 
-//-------------->Insert
-// Database::getInstatnce()->insert('users', [
-//     'username'=> 'Kahoot',  
-//     'password' => '123',
-//     'email' => 'asd1'
-// ]);   
+        'password_again' => [
+            'required' => true,
+            'matches' => 'password',
 
+        ]
 
-//--------------> Update
-// $id = 150;
-// Database::getInstatnce()->update('users', $id, [
-//     'username' => 'Kahoot1',  
-//     'password' => 'asd1'
-// ]);  
+    ]);
+    
+    if($validation->passed()){
+        echo 'passed';
+    } else {
+        foreach($validation->errors() as $error){
+            echo $error . "<br>";
+        }
+    }
+}
+
+?>
 
 
-//Выборка пользователя
-// $users = Database::getInstatnce()->get('users', ['username', '=',  'Fara']);
-// var_dump('<pre>');
-// var_dump($users->results()[0]);
-// var_dump('</pre>');
+<form action="" method="post">
+    <div class="field">
+        <label for="username">Username</label>
+        <input type="text" name="username" value="<?php echo Input::get('username')?>">
+    </div>
 
-// echo $users->first()->username; // Only one user
-// echo $users->first()->password; 
 
-// echo $users->results()[0]->username; // All users
+    <div class="field">
+        <label for="">Password</label>
+        <input type="text" name="password">
+    </div>
+
+    <div class="field">
+        <label for="">Password Again</label>
+        <input type="text" name="password_again">
+    </div>
+    <div class="field">
+        <button type="submit">Submit</button>
+    </div>
+
