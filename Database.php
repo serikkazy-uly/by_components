@@ -14,7 +14,7 @@ class Database
             die($exeption->getMessage());
         }
     }
-// Create our instance
+    // Create our instance
     public static function getInstatnce()
     {
         if (!isset(self::$instance)) {
@@ -22,7 +22,7 @@ class Database
         }
         return self::$instance;
     }
-// Execute sql request
+    // Execute sql request
     public function query($sql, $params = [])
     {
         $this->error = false;
@@ -60,11 +60,10 @@ class Database
         return $this->count;
     }
 
-// Getting all values (записи) from table
+    // Getting all values (записи) from table
     public function get($table, $where = [])
     {
         return $this->action('SELECT *', $table, $where);
-
     }
 
     // Delete all values (записи) from table
@@ -90,6 +89,24 @@ class Database
                     return $this;
                 }
             }
+        }
+        return false;
+    }
+
+
+    public function insert($table, $fields = [])
+    {
+        $values = '';
+        foreach ($fields as $field) {
+            $values .= "?, ";
+        }
+        // var_dump($field);die;
+
+        $values = rtrim($values, ', ');
+        $sql = "INSERT INTO {$table} (`" . implode('` , `', array_keys($fields)) . "`) VALUES (" . $values . ")";
+        //    var_dump($sql);die;
+        if (!$this->query($sql, $fields)->error()) {
+            return true;
         }
         return false;
     }
