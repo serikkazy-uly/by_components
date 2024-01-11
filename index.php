@@ -1,18 +1,20 @@
 <?php
+session_start();
+
 require_once 'Database.php';
 require_once 'Config.php';
 require_once 'Input.php';
 require_once 'Validate.php';
-// require_once 'Token.php';
-// require_once 'Session.php';
+require_once 'Token.php';
+require_once 'Session.php';
 
 
 $GLOBALS['config'] = [
     'mysql' => [
         'host' => 'mysql',
+        'database' => 'app',
         'username' => 'root',
         'password' => 'secret',
-        'database' => 'app',
         'something' => [
             'no' => [
                 'foo' => [
@@ -21,15 +23,18 @@ $GLOBALS['config'] = [
             ],
         ]
     ],
-    'config_my' => []
+    'session' => [
+        'toke_name' => 'token'
+    ]
 ];
 // echo Config::get('mysql.host');
 
 // Validation (passed or error)
-if (Input::exists()) {
+    if (Input::exists() && Token::check(Input::get('token'))) {
+
     $validate = new Validate();
 
-    $validate = $validate->check($_POST, [
+    $validation = $validate->check($_POST, [
         'username' => [
             'required' => true,
             'min' => 2,
@@ -80,7 +85,7 @@ if (Input::exists()) {
         <input type="text" name="password_again">
     </div>
 
-    <!-- <input type="hidden" name="token" value="<php echo Token::generate()?>"> -->
+    <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
 
     <div class="field">
         <button type="submit">Submit</button>

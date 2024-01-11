@@ -21,5 +21,7 @@ class Config
             return $config;
         }
         return false;
+        // return null; // Return null if no path is provided
     }
+
 }

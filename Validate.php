@@ -11,8 +11,6 @@ class Validate
     }
 
     // Methods:
-
-
     public function check($source, $items = []) //
     {
         foreach ($items as $item => $rules) {
