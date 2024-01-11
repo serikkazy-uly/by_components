@@ -8,7 +8,13 @@ class Database
     private function __construct()
     {
         try {
-            $this->pdo = new PDO("mysql:host=" . Config::get('mysql.host') . "; dbname=" . Config::get('mysql.database'), Config::get('mysql.username'), Config::get('mysql.password'));
+            $host = Config::get('mysql.host');
+            $database = Config::get('mysql.database');
+            $username = Config::get('mysql.username');
+            $password = Config::get('mysql.password');
+
+            $this->pdo = new PDO("mysql:host={$host};dbname={$database}", $username, $password);
+            // $this->pdo = new PDO("mysql:host=" . Config::get('mysql.host') . "; dbname=" . Config::get('mysql.database'), Config::get('mysql.username'), Config::get('mysql.password'));
             // $this->pdo = new PDO("mysql:host=mysql; dbname=app", 'root', 'secret');
         } catch (PDOException $exeption) {
             die($exeption->getMessage());
