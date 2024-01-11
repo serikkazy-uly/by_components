@@ -73,12 +73,12 @@ if (Input::exists()) {
     </div>
     <div class="field">
         <label for="">Password</label>
-        <input type="text" name="password">
+        <input type="password" name="password">
     </div>
 
     <div class="field">
         <label for="">Password Again</label>
-        <input type="text" name="password_again">
+        <input type="password" name="password_again">
     </div>
 
     <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">

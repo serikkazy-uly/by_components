@@ -1,3 +1,4 @@
 <?php
+require_once 'init.php';
 
-echo 123;
+// var_dump(Session::get(Config::get('session.user_session')));

@@ -25,12 +25,12 @@ $GLOBALS['config'] = [
         ]
     ],
     'session' => [
-        'toke_name' => 'token'
+        'toke_name' => 'token',
+        'user_session' => 'user'
+
     ]
 ];
 // echo Config::get('mysql.host');
-
-
 // Redirect::to('test.php');
 // Redirect::to(404);
 

@@ -140,5 +140,7 @@ class Database
     public function first()
     {
         return $this->results()[0];
+        // $results = $this->results();
+        // return isset($results[0]) ? $results[0] : null;
     }
 }
