@@ -38,6 +38,18 @@ class Session
         }
     }
 
+    public static function flash($name, $string = '')
+    {
+        // self::start();
+        if (self::exists($name) && self::get($name) != '') {
+            $session = self::get($name);
+            self::delete($name);
+            return $session;
+            // unset($_SESSION[$name]);
+        } else {
+            self::put($name, $string);
+        }
+    }
     // public static function destroy()
     // {
     //     self::start();

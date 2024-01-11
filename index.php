@@ -34,7 +34,7 @@ $GLOBALS['config'] = [
 
     $validate = new Validate();
 
-    $validation = $validate->check($_POST, [
+    $validate = $validate->check($_POST, [
         'username' => [
             'required' => true,
             'min' => 2,
@@ -58,6 +58,8 @@ $GLOBALS['config'] = [
     
     if($validate->passed()){
         echo 'passed';
+        Session::flash('success', 'register success');
+        // header('Location: test.php');
     } else {
         foreach($validate->errors() as $error){
             echo $error . "<br>";
@@ -69,6 +71,7 @@ $GLOBALS['config'] = [
 
 
 <form action="" method="post">
+    <?php echo Session::flash('success');?>
     <div class="field">
         <label for="username">Username</label>
         <input type="text" name="username" value="<?php echo Input::get('username')?>">
