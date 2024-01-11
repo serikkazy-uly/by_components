@@ -7,6 +7,7 @@ require_once 'Input.php';
 require_once 'Validate.php';
 require_once 'Token.php';
 require_once 'Session.php';
+require_once 'User.php';
 
 
 $GLOBALS['config'] = [
@@ -30,7 +31,7 @@ $GLOBALS['config'] = [
 // echo Config::get('mysql.host');
 
 // Validation (passed or error)
-    if (Input::exists() && Token::check(Input::get('token'))) {
+if (Input::exists() && Token::check(Input::get('token'))) {
 
     $validate = new Validate();
 
@@ -55,13 +56,22 @@ $GLOBALS['config'] = [
         ]
 
     ]);
-    
-    if($validate->passed()){
-        echo 'passed';
+
+    if ($validate->passed()) {
+        $user = new User;
+        $user->create(
+            [
+                'username' => Input::get('username'),
+                'password' => Input::get('password'),
+
+
+            ]
+        );
+
         Session::flash('success', 'register success');
         // header('Location: test.php');
     } else {
-        foreach($validate->errors() as $error){
+        foreach ($validate->errors() as $error) {
             echo $error . "<br>";
         }
     }
@@ -69,14 +79,12 @@ $GLOBALS['config'] = [
 
 ?>
 
-
 <form action="" method="post">
-    <?php echo Session::flash('success');?>
+    <?php echo Session::flash('success'); ?>
     <div class="field">
         <label for="username">Username</label>
-        <input type="text" name="username" value="<?php echo Input::get('username')?>">
+        <input type="text" name="username" value="<?php echo Input::get('username') ?>">
     </div>
-
 
     <div class="field">
         <label for="">Password</label>
@@ -93,5 +101,4 @@ $GLOBALS['config'] = [
     <div class="field">
         <button type="submit">Submit</button>
     </div>
-    
 </form>
