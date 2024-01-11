@@ -8,7 +8,7 @@ require_once 'Validate.php';
 require_once 'Token.php';
 require_once 'Session.php';
 require_once 'User.php';
-
+require_once 'Redirect.php';
 
 $GLOBALS['config'] = [
     'mysql' => [
@@ -29,6 +29,10 @@ $GLOBALS['config'] = [
     ]
 ];
 // echo Config::get('mysql.host');
+
+
+// Redirect::to('test.php');
+Redirect::to(404);
 
 // Validation (passed or error)
 if (Input::exists() && Token::check(Input::get('token'))) {
@@ -67,6 +71,9 @@ if (Input::exists() && Token::check(Input::get('token'))) {
 
         Session::flash('success', 'register success');
         // header('Location: test.php');
+        // Redirect::to('test.php');
+        // Redirect::to(404);
+
     } else {
         foreach ($validate->errors() as $error) {
             echo $error . "<br>";
