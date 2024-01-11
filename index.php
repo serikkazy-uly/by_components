@@ -62,11 +62,8 @@ if (Input::exists() && Token::check(Input::get('token'))) {
         $user->create(
             [
                 'username' => Input::get('username'),
-                'password' => Input::get('password'),
-
-
-            ]
-        );
+                'password' => password_hash(Input::get('password'), PASSWORD_DEFAULT)
+            ]);
 
         Session::flash('success', 'register success');
         // header('Location: test.php');
