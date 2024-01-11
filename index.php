@@ -3,11 +3,14 @@ require_once 'Database.php';
 require_once 'Config.php';
 require_once 'Input.php';
 require_once 'Validate.php';
+// require_once 'Token.php';
+// require_once 'Session.php';
+
 
 $GLOBALS['config'] = [
     'mysql' => [
         'host' => 'mysql',
-        'username' => 'user',
+        'username' => 'root',
         'password' => 'secret',
         'database' => 'app',
         'something' => [
@@ -20,6 +23,7 @@ $GLOBALS['config'] = [
     ],
     'config_my' => []
 ];
+// echo Config::get('mysql.host');
 
 // Validation (passed or error)
 if (Input::exists()) {
@@ -47,10 +51,10 @@ if (Input::exists()) {
 
     ]);
     
-    if($validation->passed()){
+    if($validate->passed()){
         echo 'passed';
     } else {
-        foreach($validation->errors() as $error){
+        foreach($validate->errors() as $error){
             echo $error . "<br>";
         }
     }
@@ -75,7 +79,11 @@ if (Input::exists()) {
         <label for="">Password Again</label>
         <input type="text" name="password_again">
     </div>
+
+    <!-- <input type="hidden" name="token" value="<php echo Token::generate()?>"> -->
+
     <div class="field">
         <button type="submit">Submit</button>
     </div>
-
+    
+</form>

@@ -8,12 +8,13 @@ class Database
     private function __construct()
     {
         try {
-            $this->pdo = new PDO("mysql:host=" . Config::get('mysql:host') . "; dbname=" . Config::get('mysql:database'), Config::get('mysql.username'), Config::get('mysql.password'));
-            // echo 'Users: ' . '<br>' . '<br>';
+            $this->pdo = new PDO("mysql:host=" . Config::get('mysql.host') . "; dbname=" . Config::get('mysql.database'), Config::get('mysql.username'), Config::get('mysql.password'));
+            // $this->pdo = new PDO("mysql:host=mysql; dbname=app", 'root', 'secret');
         } catch (PDOException $exeption) {
             die($exeption->getMessage());
         }
     }
+
     // Create our instance
     public static function getInstatnce()
     {
@@ -118,10 +119,10 @@ class Database
         foreach ($fields as $key => $field) {
             $set .= "{$key} = ?, "; // username = ?, password = ?,
         }
-        
+
         $set = rtrim($set, ', '); // username = ?, password = ?
         // echo $set;die;
-    
+
         $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
         //    var_dump($sql);die;
         if (!$this->query($sql, $fields)->error()) {
@@ -130,7 +131,8 @@ class Database
         return false;
     }
 
-    public function first(){
+    public function first()
+    {
         return $this->results()[0];
     }
 }

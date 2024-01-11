@@ -39,7 +39,7 @@ class Validate
 
                         case 'matches':
                             if ($value !== $source[$rule_value]) {
-                                $this->addError("{$item} must match {$rule_value}");
+                                $this->addError("{$rule_value} must match {$item}");
                             }
                             break;
 
