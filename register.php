@@ -12,7 +12,6 @@ if (Input::exists()) {
                 'required' => true,
                 'min' => 2,
                 'max' => 15
-                // 'unique' => 'users'
             ],
 
             'email' => [ // it is name of field
@@ -49,6 +48,7 @@ if (Input::exists()) {
 
             Session::flash('success', 'register success');
             // header('Location: test.php');
+            // exit;
             // Redirect::to('test.php');
             // Redirect::to(404);
 

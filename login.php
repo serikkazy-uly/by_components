@@ -17,23 +17,24 @@ if (Input::exists()) { // check input
             ]
         ]);
 
+
         if ($validate->passed()) {
+            // echo 'Form values:';
+            // var_dump(Input::get('password'));
             $user = new User;
-            $login = $user->login(
-                Input::get('email'),
-                Input::get('password')
-            );
+            $login = $user->login(Input::get('email'),Input::get('password'));
 
             if ($login) {
                 echo 'login successful';
             } else {
+                // var_dump($login);
                 echo 'login failed';
-                echo '<br>';
+                // For debaging (temp echo: )
+                echo '<br>';echo '<br>';
                 echo 'Email: ' . Input::get('email');
                 echo '<br>';
                 echo 'Password: ' . Input::get('password');
             }
-            
         } else {
             foreach ($validate->errors() as $error) {
                 echo $error . '<br>';

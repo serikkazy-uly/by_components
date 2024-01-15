@@ -74,7 +74,6 @@ class Database
     }
 
     // Delete all values (записи) from table
-
     public function delete($table, $where = [])
     {
         return $this->action('DELETE', $table, $where);
@@ -140,7 +139,5 @@ class Database
     public function first()
     {
         return $this->results()[0];
-        // $results = $this->results();
-        // return isset($results[0]) ? $results[0] : null;
     }
 }

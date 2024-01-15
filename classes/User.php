@@ -13,43 +13,33 @@ class User
     {
         $this->db->insert('users', $fields);
     }
-    // public function login($email = null, $password = null)
-    // {
-    //     if ($email) {
-    //         $user = $this->find($email);
-    //         if ($user) {
-    //             if (password_verify($password, $this->data->password)) {
-    //                 Session::put($this->session_name, $this->data->id);
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // }
 
 
     public function login($email = null, $password = null)
-{
-    if ($email && $password) {
-        $user = $this->find($email);
-        if ($user && password_verify($password, $this->data->password)) {
-            Session::put($this->session_name, $this->data->id);
-            return true;
-        }
-    }
-    return false;
-}
-
-    public function find($email = null)
     {
-        // if ($email) {
-        $this->data = $this->db->get('users', ['email', '=', $email])->first();
-        if ($this->data) {
-            return true;
+        if ($email) {
+            $user = $this->find($email);
+            if ($user) {
+                if (password_verify($password, $this->data->password)) {
+                    // var_dump(password_verify($password, $this->data->password));exit; //bool: 
+                    Session::put($this->session_name, $this->data->id);
+                    return true;
+                }
+            }
         }
         return false;
     }
-    // return $this->data;
+
+    public function find($email = null)
+    {
+        if ($email) {
+            $this->data = $this->db->get('users', ['email', '=', $email])->first();
+            if ($this->data) {
+                return true;
+            }
+            return false;
+        }
+    }
 
     public function data()
     {
