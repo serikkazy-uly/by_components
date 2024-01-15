@@ -19,18 +19,18 @@ if (Input::exists()) { // check input
 
 
         if ($validate->passed()) {
-            // echo 'Form values:';
             // var_dump(Input::get('password'));
             $user = new User;
-            $login = $user->login(Input::get('email'),Input::get('password'));
+            $remember = (Input::get('remember')) === 'on' ? true : false; //if click true else false
+            $login = $user->login(Input::get('email'), Input::get('password'), $remember);
 
             if ($login) {
-                echo 'login successful';
+                Redirect::to('index.php'); //login successful
             } else {
                 // var_dump($login);
                 echo 'login failed';
                 // For debaging (temp echo: )
-                echo '<br>';echo '<br>';
+                echo '<br>' . '<br>';
                 echo 'Email: ' . Input::get('email');
                 echo '<br>';
                 echo 'Password: ' . Input::get('password');
@@ -53,6 +53,10 @@ if (Input::exists()) { // check input
     <div class="field">
         <label for="">Password</label>
         <input type="password" name="password">
+    </div>
+    <div class="field">
+        <label for="remember">Remember me</label>
+        <input type="checkbox" name="remember" id="remember">
     </div>
 
     <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">

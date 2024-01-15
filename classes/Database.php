@@ -121,7 +121,7 @@ class Database
     public function update($table, $id, $fields = [])
     {
         $set = '';
-        foreach ($fields as $key => $field) {
+        foreach ($fields as $key => $_) {
             $set .= "{$key} = ?, "; // username = ?, password = ?,
         }
 
