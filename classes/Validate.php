@@ -12,9 +12,11 @@ class Validate
     // Methods:
     public function check($source, $items = []) //
     {
+        // var_dump($source);
         foreach ($items as $item => $rules) {
             foreach ($rules as $rule => $rule_value) {
-                $value = $source[$item];
+                // $value = $source[$item];
+                $value = isset($source[$item]) ? trim($source[$item]) : '';
 
                 if ($rule_value && empty($value)) {
                     $this->addError("{$item} is required");

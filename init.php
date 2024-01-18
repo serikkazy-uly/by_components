@@ -17,7 +17,7 @@ $GLOBALS['config'] = [
         'database' => 'app',
         'username' => 'root',
         'password' => 'secret',
-        'something' => [
+        'something' => [      // for example:
             'no' => [
                 'foo' => [
                     'bar' => 'baz'
@@ -32,7 +32,7 @@ $GLOBALS['config'] = [
     ],
     'cookie' => [
         'cookie_name' => 'hash',
-        'cookie_expire' => '604800'
+        'cookie_expire' => '604800' // by sec one Week
 
     ]
 ];

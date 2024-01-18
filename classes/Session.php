@@ -14,7 +14,6 @@ class Session
     {
         // self::start();
         // $_SESSION[$name] = $value;
-
         return $_SESSION[$name] = $value;
     }
 
@@ -27,7 +26,7 @@ class Session
     public static function exists($name) // проверка на сущ-ие знач
     {
         // self::start();
-        return isset($_SESSION[$name]);
+        return (isset($_SESSION[$name])) ? true : false;
     }
 
     public static function delete($name)
@@ -50,6 +49,19 @@ class Session
             self::put($name, $string);
         }
     }
+
+    // public static function flash($name, $string = '')
+    // {
+    //     // self::start();
+    //     if (self::exists($name) && self::get($name) != '') {
+    //         $session = self::get($name);
+    //         self::delete($name);
+    //         return $session;
+    //         // unset($_SESSION[$name]);
+    //     } else {
+    //         self::put($name, $string);
+    //     }
+    // }
     // public static function destroy()
     // {
     //     self::start();

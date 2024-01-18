@@ -121,14 +121,17 @@ class Database
     public function update($table, $id, $fields = [])
     {
         $set = '';
+
         foreach ($fields as $key => $_) {
             $set .= "{$key} = ?, "; // username = ?, password = ?,
+
         }
 
         $set = rtrim($set, ', '); // username = ?, password = ?
         // echo $set;die;
 
         $sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
+
         //    var_dump($sql);die;
         if (!$this->query($sql, $fields)->error()) {
             return true;

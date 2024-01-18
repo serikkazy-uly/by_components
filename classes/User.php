@@ -2,12 +2,12 @@
 
 class User
 {
-    private $db, $data, $session_name, $isLoggedIn;
+    private $db, $data, $session_name, $isLoggedIn, $cookieName;
     public function __construct($user = null)
     {
         $this->db = Database::getInstatnce();
-        // $this->session_name = Config::get('session_name');
         $this->session_name = Config::get('session.user_session');
+        $this->cookieName = Config::get('cookie.cookie_name');
 
 
         if (!$user) {
@@ -16,10 +16,10 @@ class User
                 // $this->find($user);
                 if ($this->find($user)) {
                     $this->isLoggedIn = true;
-                } else {
-                    // logout
                 }
             }
+        } else {
+            $this->find($user);
         }
     }
 
@@ -53,9 +53,8 @@ class User
                         } else {
                             $hash = $hashCheck->first()->hash;
                         }
-                        // Cookie::put($this->cookieName, $hash, Config::get('cookie.cookie_expire'));
-                        Cookie::put(Config::get('cookie.cookie_name'), $hash, Config::get('cookie.cookie_expire'));
-
+                        Cookie::put($this->cookieName, $hash, Config::get('cookie.cookie_expire'));
+                        // Cookie::put(Config::get('cookie.cookie_name'), $hash, Config::get('cookie.cookie_expire'));
                     }
                     return true;
                 }
@@ -93,6 +92,38 @@ class User
 
     public function logout()
     {
-        return Session::delete($this->session_name);
+        $this->db->delete('user_sessions', ['user_id', '=', $this->data()->id]);
+        Session::delete($this->session_name);
+        Cookie::delete($this->cookieName);
+    }
+
+    public function exists()
+    {
+        return (!empty($this->data())) ? true : false;
+    }
+
+    public function update($fields = [], $id = null)
+    {
+        if (!$id && $this->isLoggedIn()) {
+            $id = $this->data()->id;
+        }
+        $this->db->update('users', $id, $fields);
+    }
+
+    public function hasPermissions($key = null)
+    {
+        if($key){
+            $group = $this->db->get('user_groups', ['id', '=', $this->data()->group_id]);
+            // var_dump($group);
+            if ($group->count()) {
+                $permissions = $group->first()->permissions;
+                $permissions = json_decode($permissions, true);
+                // var_dump($permissions[$key]);
+                if ($permissions[$key]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
