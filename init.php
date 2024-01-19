@@ -28,7 +28,6 @@ $GLOBALS['config'] = [
     'session' => [
         'toke_name' => 'token',
         'user_session' => 'user'
-
     ],
     'cookie' => [
         'cookie_name' => 'hash',
@@ -36,7 +35,6 @@ $GLOBALS['config'] = [
 
     ]
 ];
-
 
 if (Cookie::exists(Config::get('cookie.cookie_name')) && !Session::exists(Config::get('session.user_session'))) {
 
